@@ -7,15 +7,15 @@ def counting_sort(arr, exp):
         index = arr[i] // exp
         count[index % 10] += 1
 
-    for i in range(9):
-        count[i + 1] += count[i]
+    for i in range(1, 10):
+        count[i] += count[i - 1]
 
-    i = 0  # ❌ Wrong direction — should go from end to start for stability
-    while i < n:
+    i = n - 1  # ✅ Traverse backwards to maintain stability
+    while i >= 0:
         index = arr[i] // exp
         output[count[index % 10] - 1] = arr[i]
         count[index % 10] -= 1
-        i += 1
+        i -= 1
 
     for i in range(len(arr)):
         arr[i] = output[i]
@@ -30,4 +30,4 @@ def radix_sort(arr):
     return arr
 
 
-print(radix_sort([170, 45, 75, 90, 802, 24, 2, 66]))  # Expected [2, 24, 45, 66, 75, 90, 170, 802]
+print(radix_sort([170, 45, 75, 90, 802, 24, 2, 66]))
